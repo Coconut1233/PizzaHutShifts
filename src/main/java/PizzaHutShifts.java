@@ -7,8 +7,8 @@ import javax.mail.internet.MimeMultipart;
 
 
 public class PizzaHutShifts {
-    public static void main(String[] args) throws IOException {
-        ArrayList<String> shiftMails = new ArrayList<String>();
+    public static void main(String[] args) throws IOException, MessagingException {
+        ArrayList<Message> shiftMails = new ArrayList<Message>();
         Properties props = System.getProperties();
         props.setProperty("mail.store.protocol", "imaps");
         try {
@@ -25,7 +25,7 @@ public class PizzaHutShifts {
                     if(shiftMails.size()>2){
                         break;
                     }
-                    shiftMails.add(getTextFromMessage(message));
+                    shiftMails.add(message);
                 }
             }
         } catch (NoSuchProviderException e) {
@@ -35,8 +35,9 @@ public class PizzaHutShifts {
             e.printStackTrace();
             System.exit(2);
         }
+        ContentFormatter.writeRawToFile(shiftMails);
     }
-    private static String getTextFromMessage(Message message) throws MessagingException, IOException {
+    static String getTextFromMessage(Message message) throws MessagingException, IOException {
         String result = "";
         if (message.isMimeType("text/plain")) {
             result = message.getContent().toString();
