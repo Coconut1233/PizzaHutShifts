@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class MailExtractor {
+class MailExtractor {
+
+    private static final String MAIL_PASSWORD = "fqnrgwruviewulxi";
+    private static final String MAIL = "spiridonov.michail1@gmail.com";
+    private static final String HOST = "gmail.com";
+
     static String getTextFromMessage(Message message) throws MessagingException, IOException {
         String result = "";
         if (message.isMimeType("text/plain")) {
@@ -40,14 +45,13 @@ public class MailExtractor {
         try {
             Session session = Session.getDefaultInstance(props, null);
             Store store = session.getStore("imaps");
-            store.connect("imap.gmail.com", "spiridonov.michail1@gmail.com", "fqnrgwruviewulxi");
+            store.connect("imap."+HOST, MAIL, MAIL_PASSWORD);
             System.out.println(store);
             Folder inbox = store.getFolder("Inbox");
             inbox.open(Folder.READ_ONLY);
             Message messages[] = inbox.getMessages();
             for(Message message:messages) {
                 if(message.getSubject().toLowerCase().contains("schedule: ph vokovice")){
-                    System.out.println(message.getSubject());
                     shiftMails.add(message);
                 }
             }

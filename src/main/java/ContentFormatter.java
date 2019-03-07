@@ -1,22 +1,23 @@
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-class ContentFormatter {
-    static final String[] DAYS = {"Utery", "Streda", "Ctvrtek", "Patek", "Sobota", "Nedele", "Pondeli"};
+/*import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;*/
 
-    static void writeRawToFile(ArrayList<Message> messages) throws IOException, MessagingException {
+class ContentFormatter {
+    private static final String[] DAYS = {"Utery", "Streda", "Ctvrtek", "Patek", "Sobota", "Nedele", "Pondeli"};
+
+    /*static void writeRawToFile(ArrayList<Message> messages) throws IOException, MessagingException {
         for(int i = 0; i<messages.size();i++){
             BufferedWriter bw = new BufferedWriter(new FileWriter(new File("message"+i)));
             bw.write(MailExtractor.getTextFromMessage(messages.get(i)));
             bw.close();
         }
 
-    }
+    }*/
 
     static ArrayList<String[]> extractShiftTimes(Message message) throws IOException, MessagingException {
         ArrayList<String[]> shifts = new ArrayList<String[]>();
@@ -41,7 +42,7 @@ class ContentFormatter {
                     }
                 }
             }catch (ArrayIndexOutOfBoundsException e){
-
+                e.printStackTrace();
             }
         }
         return shifts;
