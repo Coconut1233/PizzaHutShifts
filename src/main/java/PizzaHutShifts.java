@@ -16,10 +16,10 @@ public class PizzaHutShifts {
         isSaved();
         ArrayList<Message> shiftMails = MailExtractor.getMails();
         ContentFormatter.getDate(shiftMails.get(shiftMails.size()-1).getSubject());
-        /*ArrayList<String[]> shifts = ContentFormatter.extractShiftTimes(shiftMails.get(shiftMails.size()-1));
+        ArrayList<String[]> shifts = ContentFormatter.extractShiftTimes(shiftMails.get(shiftMails.size()-1));
         for(String[] shift : shifts){
             ContentFormatter.printShifts(shift);
-        }*/
+        }
     }
 
     private static void isSaved(){
@@ -36,11 +36,15 @@ public class PizzaHutShifts {
                 System.out.println("saved date is too old, downloading new mails");
             } else {
                 System.out.println("saved date is less than 4 days old, download new mails? Y/N");
-                String s = sc.next();
+                String s = sc.nextLine();
                 if(s.equals("Y")){
                     return;
                 } else {
                     System.out.println("showing saved shifts");
+                    sc = new Scanner(new File("shifts"));
+                    while(sc.hasNext()){
+                        System.out.println(sc.next());
+                    }
                 }
             }
             System.out.println(diffDays);
