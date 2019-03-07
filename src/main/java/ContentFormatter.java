@@ -58,13 +58,17 @@ class ContentFormatter {
         return shifts;
     }
 
-    static void printShifts(String[] shift){
-        System.out.println("Jmeno:");
-        System.out.println(shift[0]);
+    static String printShifts(String[] shift){
+        String shiftResult = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.");
+        shiftResult+="Jmeno:"+"\n";
+        shiftResult+=shift[0]+"\n"+"\n";
         for(int i = 0; i<7; i++){
-            System.out.println(DAYS[i]);
-            System.out.println(shift[i+1]);
+            shiftResult+=sdf.format(dates[i])+" ";
+            shiftResult+=DAYS[i]+":"+"\n";
+            shiftResult+=shift[i+1]+"\n"+"\n";
         }
+        return shiftResult;
     }
 
     static void getDate(String subject) throws IOException {

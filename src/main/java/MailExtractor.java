@@ -46,7 +46,6 @@ class MailExtractor {
             Session session = Session.getDefaultInstance(props, null);
             Store store = session.getStore("imaps");
             store.connect("imap."+HOST, MAIL, MAIL_PASSWORD);
-            System.out.println(store);
             Folder inbox = store.getFolder("Inbox");
             inbox.open(Folder.READ_ONLY);
             Message messages[] = inbox.getMessages();

@@ -1,8 +1,6 @@
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,9 +15,12 @@ public class PizzaHutShifts {
         ArrayList<Message> shiftMails = MailExtractor.getMails();
         ContentFormatter.getDate(shiftMails.get(shiftMails.size()-1).getSubject());
         ArrayList<String[]> shifts = ContentFormatter.extractShiftTimes(shiftMails.get(shiftMails.size()-1));
+        PrintWriter pw = new PrintWriter(new FileWriter(new File("shifts")));
         for(String[] shift : shifts){
-            ContentFormatter.printShifts(shift);
+            pw.println(ContentFormatter.printShifts(shift)+"\n");
+            System.out.println(ContentFormatter.printShifts(shift));
         }
+        pw.close();
     }
 
     private static void isSaved(){
@@ -36,15 +37,17 @@ public class PizzaHutShifts {
                 System.out.println("saved date is too old, downloading new mails");
             } else {
                 System.out.println("saved date is less than 4 days old, download new mails? Y/N");
-                String s = sc.nextLine();
+                String s = ssc.nextLine();
                 if(s.equals("Y")){
+                    System.out.println("downloading mails");
                     return;
                 } else {
                     System.out.println("showing saved shifts");
                     sc = new Scanner(new File("shifts"));
                     while(sc.hasNext()){
-                        System.out.println(sc.next());
+                        System.out.println(sc.nextLine());
                     }
+                    System.exit(0);
                 }
             }
             System.out.println(diffDays);
